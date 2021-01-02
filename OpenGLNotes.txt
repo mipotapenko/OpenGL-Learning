@@ -1,0 +1,73 @@
+This is a document containing notes about OpenGL. The purpose of this document is to serve as a quick refresher for the the basics of OpenGL in case I forget at some
+point. Most of this information can be found in long form at https://learnopengl.com/.
+
+Inroduction
+	What is OpenGL?
+		-OpenGL is an API specification for manipulating graphics and images. The implementation of OpenGL is usually done by the graphics card manufacturers.
+		
+		Core-profile vs Immediate mode
+			-Immediate mode is an older, less flexible, less efficient standard.
+			-Core-profile is the modern spec as of v3.3.
+
+	State Machine
+		-OpenGL is a state machine. The state of OpenGL is referred to as the context.
+		-There are state changing functions and stat using functions.
+
+	Objects
+		-An OpenGL object is a collection of options that represent a subset of OpenGl's state (ex. setting of the drawing window.
+		-A common workflow with obj ects:
+			1. Create an object and store reference to it as an id.
+			2. Bind the object to the context.
+			3. Use state changing functions to set object options.
+			4. Ubind the object from the context.
+			5. This object is now ready to be used at any time by binding the object again and calling a state using function.
+			
+Using OpenGL
+	-To use OpenGL we need to do the following two things which OpenGL does not help with:
+		1. Create an OpenGL context (application window, define context, handle user input).
+		2. Find the functions in the currently used specification of OpenGL and store them in function pointers.
+	
+	-Both 1 and 2 can be done using already existing libraries such as GLFW and GLAD (respectively).
+	
+Making a Window
+	-The basic steps of getting a Window up and running:
+		1. Intitialze GLFW.
+		2. Configure GLFW using glfwWindowHint().
+			-Should set, OpenGL version number, profile, and compatibility.
+		3. Create a GLFW window.
+		4. Make the context of that window the main context on the current thread.
+		5. Intitialze GLAD
+			-Pass the function to load the address of OpenGL funcion pointers. glfwGetProcAdress provided by GLFW for this purpose.
+		6. Set up the viewport.
+		7. Register callback function for resizing window.
+		8. Create the render loop.
+		9. Terminate glfw.
+	
+	-All rendering to window should occur in the render loop.
+	
+Rendering Graphics
+	Graphics Pipeline
+		-The graphics pipeline takes 3D coordinates as inout and outputs colored pixels on a 2D plane.
+		-The processing cores on the GPU run small programs called shaders to complete each part of the graphics pipeline.
+		-There are six parts of the graphics pipeline:
+			1. Vertec Shader
+			2. Primitive Assembly
+			3. Geometry Shader
+			4. Rasterization
+			5. Fragment Shader
+			6. Tests and Blending
+		
+		-The user of OpenGL is required to specify a fragment and vertex shader.
+		
+	Vertex Rendering Objects
+		VBO - Vertex Buffer Objects store vertex data
+		VAO - Vertex Array Objects store vertex attribute data
+		EBO - Element Buffer Object stores data that specifies how the vertices are to be used to render polygons  
+	
+	-Shaders are written in GLSL and compiled at runtime.
+	-Shaders declare version and profile.
+	-Vertex shaders declare input vertex attribues.
+	-Vertex shaders set the output vertex attributes.
+	-Shaders are stored as const C strings.
+	-Fragment shaders calculate color output of the pixels.
+	-Shaders must then be linked together into a program
